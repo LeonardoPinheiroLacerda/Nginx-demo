@@ -14,8 +14,7 @@ services:
       - ./docker/site:/sites/demo
     networks:
       - nginx
-    
-  
+
 networks:
   nginx:
     driver: bridge
