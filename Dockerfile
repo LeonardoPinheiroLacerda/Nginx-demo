@@ -29,7 +29,7 @@ RUN cd nginx-${NGINX_VERSION} ; \
 # Complilando...
 RUN cd nginx-${NGINX_VERSION} ; make
 
-# Instalando...adas
+# Instalando...
 RUN cd nginx-${NGINX_VERSION} ; make install
 
 # Executa o processo do nginx
