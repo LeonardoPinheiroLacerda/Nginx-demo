@@ -15,6 +15,14 @@ RUN wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 # Extraindo...
 RUN tar -zxvf nginx-${NGINX_VERSION}.tar.gz
 
+# No caso do modulo que estaremos incluindo no nginx é necessário a seguinte dependencia...
+# Poderia ser instalada no comando da linha 7, porém para deixar claro o que esta acontecendo, 
+# irei instalar essa dependencia em um comando a parte.
+RUN apt-get install libgd-dev -y
+
+# Para verificar os modulos disponiveis rodar o comando './configure --help' dentro da pasta do arquivo 
+# fonte do nginx que baixamos via wget
+
 # Configurando...
 RUN cd nginx-${NGINX_VERSION} ; \
     ./configure \
@@ -24,7 +32,10 @@ RUN cd nginx-${NGINX_VERSION} ; \
     --http-log-path=/var/log/nginx/access.log \
     --pid-path=/var/run/nginx.pid \
     --with-http_ssl_module \
-    --with-pcre 
+    --with-pcre \
+    # Adicionando modulos dinamicos
+    --modules-path=/etc/nginx/modules \
+    --with-http_image_filter_module=dynamic
 
 # Complilando...
 RUN cd nginx-${NGINX_VERSION} ; make
